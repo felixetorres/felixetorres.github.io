@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Merriweather|Nanum+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Nanum+Gothic|EB+Garamond&display=swap');
 
 body {
-  font-family: 'Merriweather', serif;
+  font-family: 'EB Garamond', serif;
+  font-size: 19px;
 }
 
 pre {
@@ -11,6 +12,9 @@ pre {
   line-height: 100%;
 }
 
+code {
+  font-size:14px;
+}
 
 img {
   display: block;

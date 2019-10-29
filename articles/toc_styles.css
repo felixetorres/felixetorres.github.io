@@ -1,11 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Merriweather|Nanum+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Nanum+Gothic|EB+Garamond&display=swap');
 
 body {
   text-align:center;
-  font-family: 'Merriweather', serif;
+  font-family: 'EB Garamond', serif;
 }
-
+h1 {font-variant:small-caps;}
 table, th, td {
+  font-size: 18px;
   max-width: 1000px;
   margin: auto;
   border-collapse: collapse;
