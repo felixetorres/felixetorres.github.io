@@ -1,0 +1,10 @@
+name: home
+title:
+username:
+account: fetorres
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1389296
+bundleId: 2544301
+url: https://fetorres.shinyapps.io/home/
+when: 1572276121.6946

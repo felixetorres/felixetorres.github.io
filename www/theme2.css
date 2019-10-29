@@ -1,30 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Permanent+Marker|Crimson+Text|Roboto+Condensed:300|Cormorant+Garamond|Raleway|Overpass|Slabo+27px|Sniglet|Open+Sans+Condensed|Noto+Serif+JP|Quicksand:300|Inconsolata|Nanum+Gothic");
 
 
-img {
-  border-radius: 50%;
-  width:225px;
-  height:225px;
-}
-
-
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
-.marginauto {
-    margin: 10px auto 20px;
-    display: block;
-}
-
-.center {
-  text-align: center;
-}
-
 body {
   font-family: 'Nanum Gothic';
   font-size: 16px;
   max-width: 600px;
+  text-align: center;
   padding-top: 35px;
   background-color: white;
   margin: auto;
@@ -32,97 +13,19 @@ body {
   <!--margin: 325px; -->
     <!--padding: 325px;-->
 }
+
+
+img {
+  border-radius: 50%;
+  width:225px;
+  height:225px;
+}
+
 h1 {
   color: black;
   text-align: center;
   font-family: 'Permanent Marker'; <!-- Original: Permanent Marker-->
 }
-
-h2 {
-  font-family: 'Nanum Gothic';
-  height:150%;
-  font-size: 17px;
-  line-height: 150%;
-}
-
-h2 > a {
-  position: relative; 
-  color: #000;
-  text-decoration: none;
-}
-
-h2 > a:hover {
-  color: #000;
-  text-decoration:none;
-}
-
-
-h2 > a:visited {
-  position: relative; 
-  color: #000;
-  text-decoration: none;
-}
-
-h2 > a:clicked {
-  position: relative; 
-  color: #000;
-  text-decoration: none;
-}
-
-h2 > a:before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #000;
-  visibility: hidden;
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transition: all 0.3s ease-in-out 0s;
-  transition: all 0.3s ease-in-out 0s;
-}
-
-h2 > a:hover:before {
-  visibility: visible;
-  -webkit-transform: scaleX(1);
-  transform: scaleX(1);
-}
-
-a.exh:link {
-  color: black; 
-  background-color: white; 
-  transition: .5s;
-}
-
-a.exh:visited {
-  color: black;
-}
-
-a.exh:hover {
-  color: gray;
-  text-decoration: none;
-}
-
-a.ex1:link {
-  color: black; 
-  background-color: white; 
-  text-decoration: underline;
-  transition: .5s;
-}
-
-a.ex1:visited {
-  color: black;
-}
-
-a.ex1:hover {
-  color: gray;
-  text-decoration: none;
-}
-
-
-
 ul {
   list-style-type:disc;
   color: black;  
@@ -132,7 +35,68 @@ ul {
 ul li {
   padding: 5px 0px;
 }
-i {
-  color: #585858;
-    font-size: 20px;
+
+.navbar {
+  text-align: center;
+  top: 0;
+  width: 100%;
+  margin: auto;
+  max-width: 100%;
+  font-family: 'Nanum Gothic';
+  font-size: 17px; 
+  line-height: 150%;
 }
+
+.navbar > a:link {
+  position: relative;
+  color: black;
+  text-decoration:none;
+}
+
+.navbar > a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.navbar > a:visited {
+  position: relative; 
+  color: black; 
+  text-decoration: none;
+}
+
+.navbar > a:clicked {
+  position: relative; 
+  color: black;
+  text-decoration: none;
+}
+
+
+.navbar > a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.navbar > a:hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+
+.info {
+  text-align: left;
+}
+.info > a:link {color:black;}
+.info > a:hover {color:black; text-decoration:none;}
+.info > a:visited {color:black;}
+.info > a:clicked {color:black;}

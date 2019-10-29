@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <link rel = "stylesheet" href = "styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="C:/Users/fetorres/Documents/jsPacks/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  
+  <body>
+    <div class = "navbar">
+      <a href = "https://fetorres.shinyapps.io/home/">Home</a> &nbsp;&nbsp;
+      <a href = "mailto:fetorres@ucsd.edu">Message Me</a> &nbsp;&nbsp;
+      <a href = "https://github.com/felixetorres">Current Projects</a>&nbsp;&nbsp;
+      <a href = "">Articles</a>&nbsp;&nbsp;
+      <a href = "">Sample Work</a>
+    </div>
+    <br><br><br><br><br>
+  </body>
+  
+  <body>
+    <div class = "title">
+      <h1>Linking Unclean Longitudinal Records in R</h1>
+    </div>
+    
+    <div class = "subtitle">
+      <p>Felix Torres</p>
+      <p>October 28, 2019</p>
+    </div>
+    <br>
+    
+    <div class = "body">
+      <p>I work at a research-centric HIV clinic that offers <a href = "https://www.goodtogosd.com/about">free STI and HIV testing and treatment,</a> with the ultimate goal of preventing the spread of HIV. Participants may test every 3 months but their visits are not linked, meaning that different data records that belong to the same participant are not represented as the same entity. For example, take this representative dataset. </p>
+      <pre>
+        <code class = "r">
+  id    first_name last_name phone      email                         dob   
+--------------------------------------------------------------------------------
+1 ax1   Harry      Potter    1112223333 theboywholived@email.com      1996-01-01
+2 ax2   Harry      Poter     1112223333                               1996-01-01
+3 ax3   Ron        Weasley   4445556666 icouldeatahipogriff@email.com 1996-02-03
+4 ax4   Luna       Lovegood  4738292109 magizoologist4ever@email.com  1998-06-01
+        </code>
+      </pre>
+      <p>We see that Harry Potter is entered twice: once with <code>id = 'ax1'</code> and another time with <code>id = 'ax2'</code>. In the second record, Harry’s last name is misspelled and his email is missing. However, we can reasonably say that <code>'ax1'</code> and <code>'ax2'</code> are the same person because their dates of birth and phone numbers match exactly, and their names are close enough. This is a simple example of record linkage.</p>
+      
+      <p>A few months ago, I was asked to do this for the set of visitors to our HIV testing site. Manually comparing records is easy for a small dataset like the one above, but it’s impossible with a dataset of thousands of observations (the one I was given recently reached 45,000). In the Harry Potter data, we have just 4 observations and the number of unique pairwise comparisons (probabilistic combination) is 6. Add another observation, and the number of unique combinations increases to 10. In fact, with every added observation, the number of unique comparisons grows exponentially such that with 45,000 observations, the number of pairwise comparisons exceeds one billion. To demonstrate:</p>
+      <br>
+      <p>
+        $$ 
+        \begin{align*}
+        {n}\choose{r} &= \frac{n!}{(n - r)!r!} \\ 
+        \\
+        &= \frac{n!}{(n - 2)!2!} \\ 
+        \\
+        &= \frac{n(n - 1)}{2} \\ 
+        \\
+        {45000}\choose{2} &= \frac{45000 * 44999}{2} = 1012477500
+        \end{align*}
+        $$
+      </p>
+      <br>
+      <p>Needless to say, record linkage by manual review is out of the question. Here is a guide to link records programmatically. </p>
+      
+      <br>
+      
+      <h2>The Field of Record Linkage</h2>
+      <p>I was surprised to learn that there is an entire field of study dedicated to probabilistic record linkage. Even though the need for record linkage has existed forever, the term was officially coined by Halbert L. Dunn in his 1946 article <a href = "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1624512/">"Record Linkage,"</a> published in the American Journal of Public Health. Today, linkage is done routinely by statisticians, historians, epidemiologists, among others, for commercial and non-commercial applications. Law enforcement agencies use it widely to find cases of fraud and <a href = "https://www.nytimes.com/2018/10/15/science/gedmatch-genealogy-cold-cases.html">solve unsolvable crime mysteries</a>, epidemiologists often apply it to generate longitudinal data from cross-sectional data, and the <a href = "https://www.census.gov/srd/papers/pdf/rr91-9.pdf">U.S. Census uses it</a> to avoid double-counting people. With the development of powerful computers, the possibilities of record-linkage are endless.  </p>
+      <p>Since its official conception in the 1940s, record linkage has acquired renewed saliece with the recent boom in machine learning applications. The Fellegi-Sunter (F-S) method is a good computer-oriented example; it applies a decision model that classifies a pair of records as a match, a non-match, or a pair requiring manual review. <a href = "https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1969.10501049#.XbcZmOhKgnI">Fellegi and Sunter's 2012 paper explains.</a> Despite the buzz around machine learning and artificial intelligence, though, applying these methods usually requires you to make assumptions about the data that are rarely satisfied in practice. One that is often violated is the assumption of <strong>conditional independence</strong>, which requires that any given field is unrelated from all the others. For instance, if your first name is “Juan”, your last name is more likely to be “Rodriguez” than “Nakazawa” and therefore in this case, a first name and a last name represent two pieces of information that are related, do not satisfy the conditional independence assumption and therefore render the traditional F-S method inaccurate. </p>
+      <p>In response to the assumption problem, there have been published efforts to explicitly model the conditional dependence of variables before linkage, but these attempts haven’t resulted in an improvement in linkage quality. Therefore, checking assumptions is a crucial step in the record linkage workflow. </p>
+      <p>Luckily, there are several publically-available probabilistic record linkage packages in R. Two of the most popular are <a href = "https://cran.r-project.org/web/packages/RecordLinkage/index.html">RecordLinkage</a> and <a href = "https://github.com/kosukeimai/fastLink">fastLink</a>. On the dataset of 45,000 observations I worked with, these packages were helpful, but upon manual review, I saw that their linkages gave way to too many false positives and false negatives, most likely because my data violated underlying assumptions and was largely missing.</p>
+      <p>Below, I demonstrate how deterministic (as opposed to stochastic) rules can be used to provide linkages that are just as good (if not better) than those of the F-S model.</p>
+      
+      <br> 
+      <h2>Linkage in Practice</h2>
+      <h3>RecordLinkage</h3>
+      <h3>fastLink</h3>
+      <h3>Deterministic Rules</h3>
+    </div>
+  </body>
+</html>
